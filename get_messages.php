@@ -1,4 +1,6 @@
 <?php
+$current_user = isset($_GET['current_user']) ? $_GET['current_user'] : '';
+
 $messages_raw = file_get_contents('messages.txt');
 $messages_array = explode("\n", $messages_raw);
 
@@ -8,10 +10,8 @@ foreach ($messages_array as $message_line) {
     if (!empty($message_line)) {
         list($username, $message, $timestamp) = explode('|', $message_line, 3);
         
-        // Simple logic to differentiate sender for styling (e.g., if username is 'Me')
-        // In a real app, you'd use session/user ID to determine 'my' messages
-        $is_my_message = (strtolower($username) === strtolower('Me')); // You can change 'Me' to a specific username for testing
-        $message_class = $is_my_message ? 'my-message' : 'other-message';
+        // Determine message type based on current user
+        $message_class = (strtolower($username) === strtolower($current_user)) ? 'user' : 'agent';
 
         $output .= "<div class=\"message-container {$message_class}\">";
         $output .= "    <div class=\"message-bubble\">";

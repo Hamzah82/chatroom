@@ -3,162 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp-like PHP Chatroom</title>
+    <title>Encrypted Terminal Chat</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            background-color: #ece5dd; /* WhatsApp background color */
+            background-color: #1a1a1a; /* Dark background */
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            color: #333;
+            height: 100vh; /* Ensure body takes full viewport height */
+            color: #e0e0e0; /* Light grey text */
         }
         header {
-            background-color: #075e54; /* WhatsApp header green */
-            color: white;
+            background-color: #222222; /* Dark grey header */
+            color: #ffffff; /* White text */
             padding: 15px 20px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: none; /* No shadow */
             margin-bottom: 20px;
             font-size: 1.5em;
             font-weight: bold;
+            text-transform: uppercase;
         }
         .container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-color: #282828; /* Slightly lighter dark grey container */
+            border-radius: 0px; /* Sharp corners */
+            box-shadow: none; /* No shadow */
             padding: 15px;
             width: 95%;
             max-width: 800px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            flex-grow: 1;
+            flex-grow: 1; /* Allow container to grow */
+            border: 1px solid #333333; /* Subtle dark border */
         }
         #chat-box {
             width: 100%;
             height: 60vh; /* Use viewport height for better responsiveness */
-            border: none;
-            padding: 10px;
+            min-height: 300px; /* Minimum height for chat box */
+            flex-grow: 1; /* Allow chat-box to grow */
+            border: 1px solid #333333; /* Subtle dark border */
+            padding: 10px; /* Uniform padding */
             overflow-y: auto;
-            background-image: url('https://www.transparenttextures.com/patterns/diagmonds-light.png'); /* Optional: WhatsApp-like background texture */
-            background-color: #e5ddd5; /* Fallback for texture */
-            border-radius: 5px;
+            background-color: #1e1e1e; /* Dark grey chat background */
+            border-radius: 0px;
             display: flex;
             flex-direction: column;
+            box-shadow: none; /* No glow */
         }
+        /* General message container */
         .message-container {
-            display: flex;
-            margin-bottom: 8px;
+            display: flex; /* Keep as flex to allow positioning of bubble inside */
+            margin-bottom: 10px; /* Space between messages */
         }
-        .message-container.my-message {
-            justify-content: flex-end;
+
+        /* Message from the user (aligned right) */
+        .message-container.user {
+            justify-content: flex-end; /* Push bubble to the right within its container */
         }
-        .message-container.other-message {
-            justify-content: flex-start;
+
+        /* Message from the agent (aligned left) */
+        .message-container.agent {
+            justify-content: flex-start; /* Push bubble to the left within its container */
         }
+
+        /* Styling for the actual message bubble */
         .message-bubble {
-            max-width: 75%;
-            padding: 8px 12px;
-            border-radius: 7px;
-            position: relative;
-            word-wrap: break-word;
-            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+            max-width: 75%; /* Limit bubble width */
+            padding: 10px 15px; /* Good padding */
+            border-radius: 4px; /* Subtle rounding */
+            word-wrap: break-word; /* Ensures text wraps */
+            box-shadow: none; /* No glow */
+            position: relative; /* For potential future elements like read receipts */
         }
-        .my-message .message-bubble {
-            background-color: #dcf8c6; /* My message green */
-            margin-left: auto;
+
+        /* Specific styles for user's message bubble */
+        .message-container.user .message-bubble {
+            background-color: #333333; /* Darker grey for user messages */
+            color: #e0e0e0; /* Light grey text */
+            border: 1px solid #444444; /* Subtle border */
+            /* NO margin-left or margin-right here */
         }
-        .other-message .message-bubble {
-            background-color: #ffffff; /* Other message white */
-            margin-right: auto;
+
+        /* Specific styles for agent's message bubble */
+        .message-container.agent .message-bubble {
+            background-color: #222222; /* Even darker grey for agent messages */
+            color: #e0e0e0; /* Light grey text */
+            border: 1px solid #333333; /* Subtle border */
+            /* NO margin-left or margin-right here */
         }
+
+        /* Sender name styling */
         .message-sender {
             font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 2px;
-            color: #075e54; /* Dark green for sender */
+            font-size: 0.85em; /* Slightly smaller */
+            margin-bottom: 4px; /* Space between sender and content */
+            color: #999999; /* Subtle grey */
         }
-        .my-message .message-sender {
-            color: #128c7e; /* Lighter green for my sender */
-        }
+
+        /* Message content styling */
         .message-content {
-            font-size: 1em;
-            margin-bottom: 2px;
+            font-size: 0.95em; /* Slightly smaller for elegance */
+            margin-bottom: 4px; /* Space between content and time */
+            color: #e0e0e0;
         }
+
+        /* Message time styling */
         .message-time {
-            font-size: 0.7em;
-            color: #888;
+            font-size: 0.65em; /* Smaller for subtlety */
+            color: #777777; /* Even darker grey for time */
             text-align: right;
-            margin-top: 5px;
         }
         #message-form {
             display: flex;
             gap: 10px;
             padding: 10px 0;
-            background-color: #f0f0f0; /* Input bar background */
-            border-radius: 8px;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            background-color: #282828; /* Dark input bar background */
+            border-radius: 0px;
+            box-shadow: none; /* No shadow */
+            border: 1px solid #333333;
         }
         #username-input, #message-input {
             padding: 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 20px; /* Rounded input fields */
+            border: 1px solid #444444; /* Darker subtle border */
+            border-radius: 3px;
             font-size: 1em;
-            background-color: #fff;
+            background-color: #1e1e1e; /* Dark input fields */
+            color: #e0e0e0;
+            box-shadow: none; /* No inner glow */
         }
         #username-input {
-            width: 100px;
-            flex-shrink: 0;
+            flex: 0 0 100px;
             margin-left: 10px;
+        }
+        @media (max-width: 600px) {
+            #message-form {
+                flex-wrap: wrap;
+            }
+            #username-input {
+                flex: 1 1 100%;
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+            #message-input {
+                flex: 1 1 100%;
+            }
+            #send-button {
+                flex: 1 1 100%;
+                margin-right: 0;
+            }
         }
         #message-input {
             flex-grow: 1;
         }
         #send-button {
             padding: 10px 20px;
-            background-color: #128c7e; /* WhatsApp send button green */
-            color: white;
-            border: none;
-            border-radius: 20px; /* Rounded send button */
+            background-color: #444444; /* Dark grey send button */
+            color: #ffffff; /* White text */
+            border: 1px solid #555555;
+            border-radius: 3px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
             margin-right: 10px;
+            box-shadow: none; /* No glow */
         }
         #send-button:hover {
-            background-color: #075e54;
+            background-color: #555555; /* Slightly lighter grey on hover */
+            box-shadow: none; /* No glow */
         }
         footer {
             margin-top: 20px;
             padding: 10px;
-            color: #666;
+            color: #888888; /* Muted grey for footer */
             font-size: 0.8em;
             text-align: center;
             width: 100%;
+            text-shadow: none; /* Remove glow */
         }
     </style>
 </head>
 <body>
     <header>
-        WhatsApp Chatroom
+        SECURE TERMINAL ACCESS
     </header>
 
     <div class="container">
         <div id="chat-box"></div>
 
         <form id="message-form">
-            <input type="text" id="username-input" placeholder="Your Name" required>
-            <input type="text" id="message-input" placeholder="Type your message..." required>
+            <input type="text" id="username-input" placeholder="Agent ID" required>
+            <input type="text" id="message-input" placeholder="Enter encrypted message..." required>
             <button type="submit" id="send-button">Send</button>
         </form>
     </div>
 
     <footer>
-        <p>&copy; 2025 WhatsApp-like Chatroom. All rights reserved.</p>
+        <p>&copy; 2025 Secure Terminal. All rights reserved.</p>
     </footer>
 
     <script>
@@ -168,7 +216,12 @@
         const messageInput = document.getElementById('message-input');
 
         function fetchMessages() {
-            fetch('get_messages.php')
+            const currentUsername = usernameInput.value.trim();
+            let url = 'get_messages.php';
+            if (currentUsername) {
+                url += '?current_user=' + encodeURIComponent(currentUsername);
+            }
+            fetch(url)
                 .then(response => response.text())
                 .then(data => {
                     chatBox.innerHTML = data;
