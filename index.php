@@ -224,8 +224,11 @@
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
+                    const isScrolledToBottom = chatBox.scrollHeight - chatBox.clientHeight <= chatBox.scrollTop + 1; // Add a small buffer
                     chatBox.innerHTML = data;
-                    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+                    if (isScrolledToBottom) {
+                        chatBox.scrollTop = chatBox.scrollHeight; // Only scroll to bottom if user was already there
+                    }
                 })
                 .catch(error => console.error('Error fetching messages:', error));
         }

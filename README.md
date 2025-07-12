@@ -1,13 +1,14 @@
-# Simple PHP Chatroom (WhatsApp-like UI)
+# Encrypted Terminal Chat (Dark Minimalist UI)
 
-This is a basic real-time chatroom application built with PHP, HTML, CSS, and JavaScript. It features a user interface inspired by WhatsApp and updates messages every 0.5 seconds.
+This is a basic real-time chatroom application built with PHP, HTML, CSS, and JavaScript. It features a dark, minimalist user interface inspired by hacker terminals and updates messages every 0.5 seconds.
 
 ## Features
 
 *   **Real-time Messaging:** Messages are updated every 0.5 seconds using AJAX.
 *   **Simple Storage:** Messages are stored in a plain text file (`messages.txt`).
-*   **WhatsApp-like UI:** Basic styling to mimic the look and feel of WhatsApp chat bubbles.
-*   **User Identification:** Users can enter a username before sending messages.
+*   **Dark Minimalist UI:** Elegant dark mode styling with a terminal-like aesthetic.
+*   **User/Agent Differentiation:** Messages are styled differently based on whether they are sent by the active user or another participant (agent).
+*   **Responsive Layout:** The chat interface adapts to different screen sizes for a consistent experience.
 
 ## Setup and Installation
 
@@ -35,12 +36,12 @@ To get this chatroom running on your server, follow these steps:
 ## Usage
 
 1.  Open your web browser and navigate to the URL where you placed the files (e.g., `http://localhost/index.php`).
-2.  Enter your desired username in the "Your Name" field.
-3.  Type your message in the "Type your message..." field.
+2.  Enter your desired Agent ID in the "Agent ID" field.
+3.  Type your encrypted message in the "Enter encrypted message..." field.
 4.  Click the "Send" button or press Enter.
 
 Messages will appear in the chat box and will be visible to all users accessing the page.
 
-## "My Message" Styling
+## Message Styling
 
-The `get_messages.php` script includes a simple logic to differentiate between "my" messages and "other" messages for styling purposes. If the username entered is `Me` (case-insensitive), the message will be styled as a `my-message` (green bubble). You can modify this logic in `get_messages.php` to match a specific username you use for testing, or implement a more robust user session management in a production environment.
+The `get_messages.php` script now differentiates messages based on the `Agent ID` entered by the current user. Messages sent by the active user will be styled with the `.message-container.user` class (aligned right), while messages from other users will be styled with the `.message-container.agent` class (aligned left). This provides a clear visual distinction similar to a two-way conversation.
