@@ -2,7 +2,7 @@
     {
         "username": "hamzah",
         "password": "$2y$12$z83hG03E4Db1LaojhWbgWeB0iSVEhnjDLhjhVqf7ZGnA54san8Mz.",
-        "last_active": 1752404485,
+        "last_active": 0,
         "is_typing": false,
         "role": "admin"
     },
@@ -10,21 +10,21 @@
         "username": "Javi",
         "password": "$2y$12$VV6Ms7ngZ3g.2QKvxZAHGed7.Fc.0ztoeN1OJ0LxbSGqcNDAE0vnW",
         "last_active": 0,
-        "is_typing": false,
+        "is_typing": true,
         "role": "user"
     },
     {
         "username": "hamzah2",
         "password": "$2y$12$xGdm.rO\/1LBVvks509HKUej3OzKovVhWWGQjbfNCcarfhu3Y8MiJe",
-        "last_active": 1752404471,
-        "is_typing": false,
+        "last_active": 0,
+        "is_typing": true,
         "role": "user"
     },
     {
         "username": "Ahnaf",
         "password": "$2y$12$\/1wsvLPHJCGnpEm\/jpTr2uHl0q0E6Bma4RU2MqDJ.8oWo7CWTzyR2",
         "last_active": 0,
-        "is_typing": false,
+        "is_typing": true,
         "role": "user"
     }
 ]
