@@ -116,3 +116,81 @@ footer {
     text-align: center;
     font-weight: bold;
 }
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #282828;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #333;
+    width: 80%; /* Could be more responsive */
+    max-width: 500px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ul#online-users-modal-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #444;
+    padding: 10px;
+    background-color: #1e1e1e;
+}
+
+ul#online-users-modal-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #333;
+}
+
+ul#online-users-modal-list li:last-child {
+    border-bottom: none;
+}
+
+.delete-message-btn {
+    background-color: #dc3545; /* Red color for delete */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.7em;
+    margin-left: 10px;
+    float: right; /* Align to the right of the message bubble */
+}
+
+.delete-message-btn:hover {
+    background-color: #c82333;
+}
+
+.deleted-message {
+    font-style: italic;
+    color: #888; /* Grey out deleted messages */
+}

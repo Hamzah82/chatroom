@@ -1,3 +1,5 @@
-hamzah|test|2025-07-13 08:23:23
-hamzah|sedang menunggu javi online|2025-07-13 08:24:28
-hamzah|...|2025-07-13 08:24:38
+{"id":"68738018555d9","username":"hamzah","message":"tes","timestamp":"2025-07-13 09:44:56","deleted":true}
+{"id":"6873802acb642","username":"hamzah","message":"tes","timestamp":"2025-07-13 09:45:14","deleted":true}
+{"id":"68738079989ba","username":"hamzah","message":"Halo test","timestamp":"2025-07-13 09:46:33","deleted":true}
+{"id":"6873810f4c1b5","username":"hamzah","message":"tes","timestamp":"2025-07-13 09:49:03","deleted":true}
+{"id":"68738371da259","username":"hamzah","message":"tes","timestamp":"2025-07-13 09:59:13","deleted":true}

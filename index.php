@@ -187,8 +187,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="container">
         <div class="online-users-display">
             Online Users: <span id="online-users-count">0</span>
+            <div id="online-users-list" style="font-size: 0.8em; color: #aaa;"></div>
         </div>
         <div id="chat-box"></div>
+
+        <div id="typing-indicator" style="min-height: 20px; color: #777; font-size: 0.9em; margin-bottom: 5px;"></div>
 
         <form id="message-form">
             <input type="text" id="message-input" placeholder="Enter encrypted message..." required>
@@ -201,10 +204,44 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <p>&copy; 2025 Secure Terminal. All rights reserved.</p>
     </footer>
 
+    <!-- Online Users Modal -->
+<div id="online-users-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" id="close-online-users-modal">&times;</span>
+        <h2>Online Users</h2>
+        <ul id="online-users-modal-list"></ul>
+    </div>
+</div>
+
     <script>
         const chatBox = document.getElementById('chat-box');
         const messageForm = document.getElementById('message-form');
         const messageInput = document.getElementById('message-input');
+
+        // Modal elements
+        const onlineUsersModal = document.getElementById('online-users-modal');
+        const closeOnlineUsersModal = document.getElementById('close-online-users-modal');
+        const showAllOnlineUsersLink = document.getElementById('show-all-online-users');
+
+        // Event listener for opening the modal
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.id === 'show-all-online-users') {
+                event.preventDefault();
+                onlineUsersModal.style.display = 'block';
+            }
+        });
+
+        // Event listener for closing the modal
+        closeOnlineUsersModal.addEventListener('click', function() {
+            onlineUsersModal.style.display = 'none';
+        });
+
+        // Close modal if clicked outside
+        window.addEventListener('click', function(event) {
+            if (event.target == onlineUsersModal) {
+                onlineUsersModal.style.display = 'none';
+            }
+        });
 
         function fetchMessages() {
             let url = 'get_messages.php';
@@ -219,6 +256,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 })
                 .catch(error => console.error('Error fetching messages:', error));
         }
+
+        // Event listener for delete buttons (delegated)
+        chatBox.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete-message-btn')) {
+                const messageId = event.target.dataset.messageId;
+                if (confirm('Are you sure you want to delete this message?')) {
+                    const formData = new FormData();
+                    formData.append('message_id', messageId);
+
+                    fetch('delete_message.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data === 'success') {
+                            fetchMessages(); // Refresh messages after deletion
+                        } else {
+                            alert('Failed to delete message: ' + data);
+                        }
+                    })
+                    .catch(error => console.error('Error deleting message:', error));
+                }
+            }
+        });
 
         messageForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -252,13 +314,38 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         fetchMessages();
 
         const onlineUsersCountElement = document.getElementById('online-users-count');
+        const onlineUsersListElement = document.getElementById('online-users-list');
 
         function fetchOnlineUsers() {
             let url = 'online_users.php';
             fetch(url)
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
-                    onlineUsersCountElement.textContent = data;
+                    onlineUsersCountElement.textContent = data.length;
+
+                    const displayLimit = 3; // Number of names to display directly
+                    if (data.length > 0) {
+                        let displayedNames = data.slice(0, displayLimit);
+                        let remainingUsers = data.length - displayLimit;
+
+                        let listHtml = displayedNames.join(', ');
+                        if (remainingUsers > 0) {
+                            listHtml += ` and <a href="#" id="show-all-online-users">${remainingUsers} others</a>`;
+                        }
+                        onlineUsersListElement.innerHTML = `(${listHtml})`;
+
+                        // Populate modal list
+                        const modalList = document.getElementById('online-users-modal-list');
+                        modalList.innerHTML = '';
+                        data.forEach(user => {
+                            const li = document.createElement('li');
+                            li.textContent = user;
+                            modalList.appendChild(li);
+                        });
+
+                    } else {
+                        onlineUsersListElement.textContent = '';
+                    }
                 })
                 .catch(error => console.error('Error fetching online users:', error));
         }
@@ -286,6 +373,64 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         // Initial heartbeat
         sendHeartbeat();
+
+        // Send offline signal when the page is unloaded
+        window.addEventListener('beforeunload', function() {
+            navigator.sendBeacon('offline.php');
+        });
+
+        const typingIndicatorElement = document.getElementById('typing-indicator');
+        let typingTimeout;
+        let isTyping = false;
+
+        function sendTypingStatus(status) {
+            const formData = new FormData();
+            formData.append('is_typing', status);
+            fetch('typing_status.php', {
+                method: 'POST',
+                body: formData,
+                keepalive: true // Important for sending status on page unload
+            })
+            .catch(error => console.error('Error sending typing status:', error));
+        }
+
+        messageInput.addEventListener('input', function() {
+            if (!isTyping) {
+                isTyping = true;
+                sendTypingStatus(true);
+            }
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                isTyping = false;
+                sendTypingStatus(false);
+            }, 1500); // User stops typing for 1.5 seconds
+        });
+
+        messageInput.addEventListener('blur', function() {
+            if (isTyping) {
+                isTyping = false;
+                sendTypingStatus(false);
+                clearTimeout(typingTimeout);
+            }
+        });
+
+        function fetchTypingStatus() {
+            fetch('get_typing_status.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const typingUsers = data.join(', ');
+                        typingIndicatorElement.textContent = `${typingUsers} is typing...`;
+                    } else {
+                        typingIndicatorElement.textContent = '';
+                    }
+                })
+                .catch(error => console.error('Error fetching typing status:', error));
+        }
+
+        // Fetch typing status every 2 seconds
+        setInterval(fetchTypingStatus, 2000);
+
+        // Initial fetch for typing status
+        fetchTypingStatus();
     </script>
-</body>
-</html>
