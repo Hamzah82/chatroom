@@ -41,3 +41,34 @@
 2025-07-13 10:20:05 - Comparing: ID='6873802acb642' (target: '6873802acb642') | User='hamzah' (target: 'hamzah')
 2025-07-13 10:20:05 - Message found and authorized. Marking as deleted.
 2025-07-13 10:20:05 - Deletion successful.
+2025-07-13 10:28:42 - delete_message.php accessed.
+2025-07-13 10:28:42 - Current User: hamzah
+2025-07-13 10:28:42 - Message ID to Delete: 687389d506daa
+2025-07-13 10:28:42 - Comparing: ID='68738018555d9' (target: '687389d506daa') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:28:42 - Comparing: ID='6873802acb642' (target: '687389d506daa') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:28:42 - Comparing: ID='68738079989ba' (target: '687389d506daa') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:28:42 - Comparing: ID='6873810f4c1b5' (target: '687389d506daa') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:28:42 - Comparing: ID='68738371da259' (target: '687389d506daa') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:28:42 - Comparing: ID='687389d506daa' (target: '687389d506daa') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:28:42 - Message found and authorized. Marking as deleted.
+2025-07-13 10:28:42 - Deletion successful.
+2025-07-13 10:29:48 - delete_message.php accessed.
+2025-07-13 10:29:48 - Current User: hamzah
+2025-07-13 10:29:48 - Message ID to Delete: 68738a82651eb
+2025-07-13 10:29:48 - Comparing: ID='68738a7c23258' (target: '68738a82651eb') | User='hamzah2' (target: 'hamzah')
+2025-07-13 10:29:48 - Comparing: ID='68738a82651eb' (target: '68738a82651eb') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:29:48 - Message found and authorized. Marking as deleted.
+2025-07-13 10:29:48 - Deletion successful.
+2025-07-13 10:30:15 - delete_message.php accessed.
+2025-07-13 10:30:15 - Current User: hamzah
+2025-07-13 10:30:15 - Message ID to Delete: 68738a82651eb
+2025-07-13 10:30:15 - Comparing: ID='68738a7c23258' (target: '68738a82651eb') | User='hamzah2' (target: 'hamzah')
+2025-07-13 10:30:15 - Comparing: ID='68738a82651eb' (target: '68738a82651eb') | User='hamzah' (target: 'hamzah')
+2025-07-13 10:30:15 - Message found and authorized. Marking as deleted.
+2025-07-13 10:30:15 - Deletion successful.
+2025-07-13 10:31:57 - delete_message.php accessed.
+2025-07-13 10:31:57 - Current User: hamzah2
+2025-07-13 10:31:57 - Message ID to Delete: 68738a7c23258
+2025-07-13 10:31:57 - Comparing: ID='68738a7c23258' (target: '68738a7c23258') | User='hamzah2' (target: 'hamzah2')
+2025-07-13 10:31:57 - Message found and authorized. Marking as deleted.
+2025-07-13 10:31:57 - Deletion successful.

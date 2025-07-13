@@ -175,19 +175,21 @@ ul#online-users-modal-list li:last-child {
 }
 
 .delete-message-btn {
-    background-color: #dc3545; /* Red color for delete */
-    color: white;
+    background: none; /* No background */
+    color: #888; /* Softer grey text */
     border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
+    padding: 0; /* No padding */
     font-size: 0.7em;
-    margin-left: 10px;
-    float: right; /* Align to the right of the message bubble */
+    cursor: pointer;
+    position: absolute; /* Position absolutely within the relative parent */
+    top: 5px; /* Adjust as needed */
+    right: 5px; /* Adjust as needed */
+    z-index: 10; /* Ensure it's above message content */
 }
 
 .delete-message-btn:hover {
-    background-color: #c82333;
+    color: #aaa; /* Slightly lighter on hover */
+    text-decoration: underline; /* Underline on hover */
 }
 
 .deleted-message {
