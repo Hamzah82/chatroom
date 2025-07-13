@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encrypted Terminal Chat</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         * {
             box-sizing: border-box;
@@ -130,7 +139,7 @@
             box-shadow: none; /* No shadow */
             border: 1px solid #333333;
         }
-        #username-input, #message-input {
+        #message-input {
             padding: 10px 15px;
             border: 1px solid #444444; /* Darker subtle border */
             border-radius: 3px;
@@ -139,29 +148,9 @@
             color: #e0e0e0;
             box-shadow: none; /* No inner glow */
         }
-        #username-input {
-            flex: 0 0 100px;
-            margin-left: 10px;
-        }
-        @media (max-width: 600px) {
-            #message-form {
-                flex-wrap: wrap;
-            }
-            #username-input {
-                flex: 1 1 100%;
-                margin-left: 0;
-                margin-bottom: 10px;
-            }
-            #message-input {
-                flex: 1 1 100%;
-            }
-            #send-button {
-                flex: 1 1 100%;
-                margin-right: 0;
-            }
-        }
         #message-input {
             flex-grow: 1;
+            margin-left: 10px;
         }
         #send-button {
             padding: 10px 20px;
@@ -196,31 +185,29 @@
     </header>
 
     <div class="container">
+        <div class="online-users-display">
+            Online Users: <span id="online-users-count">0</span>
+        </div>
         <div id="chat-box"></div>
 
         <form id="message-form">
-            <input type="text" id="username-input" placeholder="Agent ID" required>
             <input type="text" id="message-input" placeholder="Enter encrypted message..." required>
             <button type="submit" id="send-button">Send</button>
         </form>
     </div>
 
     <footer>
+        <p>Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>! <a href="logout.php">Logout</a></p>
         <p>&copy; 2025 Secure Terminal. All rights reserved.</p>
     </footer>
 
     <script>
         const chatBox = document.getElementById('chat-box');
         const messageForm = document.getElementById('message-form');
-        const usernameInput = document.getElementById('username-input');
         const messageInput = document.getElementById('message-input');
 
         function fetchMessages() {
-            const currentUsername = usernameInput.value.trim();
             let url = 'get_messages.php';
-            if (currentUsername) {
-                url += '?current_user=' + encodeURIComponent(currentUsername);
-            }
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
@@ -235,12 +222,10 @@
 
         messageForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const username = usernameInput.value.trim();
             const message = messageInput.value.trim();
 
-            if (username && message) {
+            if (message) {
                 const formData = new FormData();
-                formData.append('username', username);
                 formData.append('message', message);
 
                 fetch('send_message.php', {
@@ -265,6 +250,42 @@
 
         // Initial fetch
         fetchMessages();
+
+        const onlineUsersCountElement = document.getElementById('online-users-count');
+
+        function fetchOnlineUsers() {
+            let url = 'online_users.php';
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    onlineUsersCountElement.textContent = data;
+                })
+                .catch(error => console.error('Error fetching online users:', error));
+        }
+
+        // Fetch online users every 5 seconds
+        setInterval(fetchOnlineUsers, 5000);
+
+        // Initial fetch for online users
+        fetchOnlineUsers();
+
+        function sendHeartbeat() {
+            fetch('heartbeat.php', {
+                method: 'POST'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Heartbeat failed:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error sending heartbeat:', error));
+        }
+
+        // Send heartbeat every 30 seconds
+        setInterval(sendHeartbeat, 30000);
+
+        // Initial heartbeat
+        sendHeartbeat();
     </script>
 </body>
 </html>

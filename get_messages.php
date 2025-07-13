@@ -1,5 +1,16 @@
 <?php
-$current_user = isset($_GET['current_user']) ? $_GET['current_user'] : '';
+session_start();
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    die("Please log in to see the messages.");
+}
+
+$current_user = $_SESSION['username'];
+
+// Create messages.txt if it doesn't exist
+if (!file_exists('messages.txt')) {
+    file_put_contents('messages.txt', '');
+}
 
 $messages_raw = file_get_contents('messages.txt');
 $messages_array = explode("\n", $messages_raw);

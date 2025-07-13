@@ -1,15 +1,24 @@
 <?php
+session_start();
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    die("Please log in to send messages.");
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = isset($_POST['username']) ? htmlspecialchars($_POST['username']) : 'Anonymous';
+    $username = $_SESSION['username']; // Get username from session
     $message = isset($_POST['message']) ? htmlspecialchars($_POST['message']) : '';
 
     if (!empty($message)) {
         $timestamp = date('Y-m-d H:i:s');
         $entry = "{$username}|{$message}|{$timestamp}\n";
 
+        // Create messages.txt if it doesn't exist
+        if (!file_exists('messages.txt')) {
+            file_put_contents('messages.txt', '');
+        }
+
         // Append message to messages.txt
-        // Use FILE_APPEND to add to the end of the file
-        // Use LOCK_EX to prevent anyone else from writing to the file at the same time
         if (file_put_contents('messages.txt', $entry, FILE_APPEND | LOCK_EX) !== false) {
             echo 'success';
         } else {
