@@ -13,11 +13,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     die("Please log in to delete messages.");
 }
 
+$current_user = $_SESSION['username'];
+$current_user_role = $_SESSION['role'] ?? 'user'; // Get current user's role
+
+debug_log("Current User: " . $current_user . " (Role: " . $current_user_role . ")");
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $current_user = $_SESSION['username'];
     $message_id_to_delete = isset($_POST['message_id']) ? $_POST['message_id'] : '';
 
-    debug_log("Current User: " . $current_user);
     debug_log("Message ID to Delete: " . $message_id_to_delete);
 
     if (empty($message_id_to_delete)) {
@@ -46,9 +49,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $message_found = false;
     foreach ($messages as &$message) {
-        debug_log("Comparing: ID='" . $message['id'] . "' (target: '" . $message_id_to_delete . "') | User='" . $message['username'] . "' (target: '" . $current_user . "')");
-        if ($message['id'] === $message_id_to_delete && strtolower($message['username']) === strtolower($current_user)) {
+        debug_log("Comparing: ID='" . ($message['id'] ?? 'N/A') . "' (target: '" . $message_id_to_delete . "') | User='" . ($message['username'] ?? 'N/A') . "' (target: '" . $current_user . "')");
+        
+        $can_delete = false;
+        $is_deleted_by_admin_flag = false; // Flag to determine if deleted_by_admin should be true
+
+        if (($message['id'] ?? null) === $message_id_to_delete) {
+            if ($current_user_role === 'admin') {
+                $can_delete = true;
+                // If admin is deleting someone else's message, set deleted_by_admin flag
+                if (strtolower($message['username'] ?? '') !== strtolower($current_user)) {
+                    $is_deleted_by_admin_flag = true;
+                }
+            } else {
+                // Regular user can only delete their own messages
+                if (strtolower($message['username'] ?? '') === strtolower($current_user)) {
+                    $can_delete = true;
+                }
+            }
+        }
+
+        if ($can_delete) {
             $message['deleted'] = true;
+            // Only set deleted_by_admin if the flag was set, otherwise unset it
+            if ($is_deleted_by_admin_flag) {
+                $message['deleted_by_admin'] = true;
+            } else {
+                unset($message['deleted_by_admin']);
+            }
             $message_found = true;
             debug_log('Message found and authorized. Marking as deleted.');
             break;
@@ -75,7 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($file_write_success) {
             echo 'success';
             debug_log('Deletion successful.');
-        } else {
+        }
+
+ else {
             echo 'error: Could not write to file.';
             debug_log('Error: Could not write to file after modification.');
         }

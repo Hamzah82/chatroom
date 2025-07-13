@@ -1,0 +1,4 @@
+{"id":"6873914e70794","username":"hamzah","message":"tes","timestamp":"2025-07-13 10:58:22","deleted":true}
+{"id":"687391525687f","username":"hamzah2","message":"tes","timestamp":"2025-07-13 10:58:26","deleted":true,"deleted_by_admin":true}
+{"id":"687391ebc84ef","username":"hamzah2","message":"h","timestamp":"2025-07-13 11:00:59","deleted":true}
+{"id":"687391f101b43","username":"hamzah","message":"f","timestamp":"2025-07-13 11:01:05","deleted":true}

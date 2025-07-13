@@ -18,6 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if ($user['username'] === $username && password_verify($password, $user['password'])) {
             $_SESSION["loggedin"] = true;
             $_SESSION["username"] = $username;
+            $_SESSION["role"] = $user['role'] ?? 'user'; // Store role in session, default to 'user'
             $user['last_active'] = time();
             $login_success = true;
             break;
