@@ -13,6 +13,18 @@ if (!file_exists('messages.txt')) {
     file_put_contents('messages.txt', '');
 }
 
+// Load user roles from users.json
+$users_data = [];
+if (file_exists('users.json')) {
+    $users_json = file_get_contents('users.json');
+    $users_array = json_decode($users_json, true);
+    if (is_array($users_array)) {
+        foreach ($users_array as $user) {
+            $users_data[strtolower($user['username'])] = $user['role'] ?? 'user';
+        }
+    }
+}
+
 $messages_raw = file_get_contents('messages.txt');
 $lines = explode("\n", $messages_raw);
 
@@ -38,10 +50,17 @@ foreach ($lines as $line) {
         // Determine message type based on current user
         $message_class = (strtolower($username) === strtolower($current_user)) ? 'user' : 'agent';
 
+        // Get sender's role
+        $sender_role = $users_data[strtolower($username)] ?? 'user';
+        $sender_class = '';
+        if ($sender_role === 'admin') {
+            $sender_class = ' admin-sender'; // Add a class for admin users
+        }
+
         // Using explicit concatenation for clarity and to avoid interpolation issues
         $output .= "<div class=\"message-container " . $message_class . "\" data-message-id=\"" . $message_id . "\" data-sender-username=\"" . $username . "\">";
         $output .= "    <div class=\"message-bubble\">";
-        $output .= "        <div class=\"message-sender\">" . $username . "</div>";
+        $output .= "        <div class=\"message-sender" . $sender_class . "\">" . $username . "</div>"; // Apply admin class here
         if ($is_deleted) {
             $deleted_message_text = $deleted_by_admin ? 'This message has been deleted by Admin.' : 'This message has been deleted.';
             $output .= "        <div class=\"message-content deleted-message\">" . $deleted_message_text . "</div>";

@@ -196,3 +196,9 @@ ul#online-users-modal-list li:last-child {
     font-style: italic;
     color: #888; /* Grey out deleted messages */
 }
+
+.message-sender.admin-sender {
+    color: gold; /* Warna emas untuk admin */
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); /* Efek glow */
+}
