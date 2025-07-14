@@ -5,6 +5,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     die("Please log in to send messages.");
 }
 
+// Check if user is banned
+$current_username = $_SESSION['username'];
+$users = [];
+if (file_exists('users.json')) {
+    $users_json = file_get_contents('users.json');
+    $users_array = json_decode($users_json, true);
+    if (is_array($users_array)) {
+        foreach ($users_array as $user) {
+            if (strtolower($user['username']) === strtolower($current_username)) {
+                if (($user['banned'] ?? false)) {
+                    die("You are banned and cannot send messages.");
+                }
+                break;
+            }
+        }
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_SESSION['username']; // Get username from session
     $message_content = isset($_POST['message']) ? htmlspecialchars($_POST['message']) : '';

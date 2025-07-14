@@ -52,14 +52,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         debug_log("Comparing: ID='" . ($message['id'] ?? 'N/A') . "' (target: '" . $message_id_to_delete . "') | User='" . ($message['username'] ?? 'N/A') . "' (target: '" . $current_user . "')");
         
         $can_delete = false;
-        $is_deleted_by_admin_flag = false; // Flag to determine if deleted_by_admin should be true
+        $deleted_by_role = null; // Store the role that deleted the message
 
         if (($message['id'] ?? null) === $message_id_to_delete) {
-            if ($current_user_role === 'admin') {
+            if ($current_user_role === 'ceo') {
                 $can_delete = true;
-                // If admin is deleting someone else's message, set deleted_by_admin flag
+                $deleted_by_role = 'ceo';
+            } else if ($current_user_role === 'admin') {
+                $can_delete = true;
+                // If admin is deleting someone else's message, set deleted_by_role
                 if (strtolower($message['username'] ?? '') !== strtolower($current_user)) {
-                    $is_deleted_by_admin_flag = true;
+                    $deleted_by_role = 'admin';
                 }
             } else {
                 // Regular user can only delete their own messages
@@ -71,11 +74,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($can_delete) {
             $message['deleted'] = true;
-            // Only set deleted_by_admin if the flag was set, otherwise unset it
-            if ($is_deleted_by_admin_flag) {
-                $message['deleted_by_admin'] = true;
+            // Check if the message being deleted belongs to the current user
+            if (strtolower($message['username'] ?? '') === strtolower($current_user)) {
+                // If it's their own message, don't set deleted_by_role
+                unset($message['deleted_by_role']);
             } else {
-                unset($message['deleted_by_admin']);
+                // If it's someone else's message and deleted by admin/ceo, set deleted_by_role
+                if ($current_user_role === 'admin' || $current_user_role === 'ceo') {
+                    $message['deleted_by_role'] = $current_user_role;
+                } else {
+                    unset($message['deleted_by_role']);
+                }
             }
             $message_found = true;
             debug_log('Message found and authorized. Marking as deleted.');

@@ -5,6 +5,45 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+// Get current user's username from session
+$current_username = $_SESSION['username'];
+
+// Load users data from users.json
+$users = [];
+if (file_exists('users.json')) {
+    $users_json = file_get_contents('users.json');
+    $users_array = json_decode($users_json, true);
+    if (is_array($users_array)) {
+        foreach ($users_array as $user_data) {
+            $users[strtolower($user_data['username'])] = $user_data;
+        }
+    }
+}
+
+// Check if current user exists in users.json and update session if necessary
+if (isset($users[strtolower($current_username)])) {
+    $user_from_file = $users[strtolower($current_username)];
+
+    // Update role in session if it's different
+    if (($_SESSION['role'] ?? 'user') !== ($user_from_file['role'] ?? 'user')) {
+        $_SESSION['role'] = $user_from_file['role'] ?? 'user';
+    }
+
+    // Update banned status in session if it's different
+    $session_banned_status = $_SESSION['banned'] ?? false;
+    $file_banned_status = $user_from_file['banned'] ?? false;
+    if ($session_banned_status !== $file_banned_status) {
+        $_SESSION['banned'] = $file_banned_status;
+    }
+
+    // If user is now banned, redirect to logout
+    if ($file_banned_status) {
+        header("location: logout.php");
+        exit;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -200,7 +239,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </div>
 
     <footer>
-        <p>Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>! <a href="logout.php">Logout</a></p>
+        <p>Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>! <a href="logout.php">Logout</a>
+        <?php if (in_array(($_SESSION['role'] ?? 'user'), ['admin', 'ceo'])): ?>
+            | <a href="admin_panel.php">Admin Panel</a>
+        <?php endif; ?>
+        </p>
         <p>&copy; 2025 Secure Terminal. All rights reserved.</p>
     </footer>
 

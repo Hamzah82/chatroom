@@ -202,3 +202,41 @@ ul#online-users-modal-list li:last-child {
     font-weight: bold;
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); /* Efek glow */
 }
+
+.message-sender.ceo-sender {
+    color: #ff0000; /* Merah menyala untuk CEO */
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.7); /* Efek glow merah */
+}
+
+.save-role-btn {
+    background-color: #28a745; /* Green color */
+    color: white;
+}
+
+.save-role-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.role-select {
+    padding: 5px 30px 5px 10px; /* Increased right padding */
+    border: 1px solid #444444;
+    border-radius: 3px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    font-size: 1em;
+    cursor: pointer;
+    appearance: none; /* Remove default browser styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23e0e0e0%22%20d%3D%22M287%2C197.3L159.3%2C69.7c-3.2-3.2-8.3-3.2-11.6%2C0L5.4%2C197.3c-3.2%2C3.2-3.2%2C8.3%2C0%2C11.6l11.6%2C11.6c3.2%2C3.2%2C8.3%2C3.2%2C11.6%2C0l120.7-120.7l120.7%2C120.7c3.2%2C3.2%2C8.3%2C3.2%2C11.6%2C0l11.6-11.6C290.2%2C205.6%2C290.2%2C200.5%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Adjusted position */
+    background-size: 12px;
+}
+
+.role-select:focus {
+    border-color: #77aaff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(119, 170, 255, 0.5);
+}

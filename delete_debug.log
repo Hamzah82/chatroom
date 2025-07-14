@@ -162,3 +162,82 @@
 2025-07-13 11:01:18 - Comparing: ID='687391f101b43' (target: '687391f101b43') | User='hamzah' (target: 'hamzah')
 2025-07-13 11:01:18 - Message found and authorized. Marking as deleted.
 2025-07-13 11:01:18 - Deletion successful.
+2025-07-14 08:46:34 - delete_message.php accessed.
+2025-07-14 08:46:34 - Current User: hamzah2 (Role: admin)
+2025-07-14 08:46:34 - Message ID to Delete: 6874c0bab3ed1
+2025-07-14 08:46:34 - Comparing: ID='6873914e70794' (target: '6874c0bab3ed1') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='687391525687f' (target: '6874c0bab3ed1') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='687391ebc84ef' (target: '6874c0bab3ed1') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='687391f101b43' (target: '6874c0bab3ed1') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='6874a25d75d97' (target: '6874c0bab3ed1') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='6874a2616dbbf' (target: '6874c0bab3ed1') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='6874bfc62bb0c' (target: '6874c0bab3ed1') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='6874bfe7c40c4' (target: '6874c0bab3ed1') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='6874c02e4c361' (target: '6874c0bab3ed1') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 08:46:34 - Comparing: ID='6874c0bab3ed1' (target: '6874c0bab3ed1') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:46:34 - Message found and authorized. Marking as deleted.
+2025-07-14 08:46:34 - Deletion successful.
+2025-07-14 08:55:41 - delete_message.php accessed.
+2025-07-14 08:55:41 - Current User: hamzah2 (Role: admin)
+2025-07-14 08:55:41 - Message ID to Delete: 6874c4012f3a9
+2025-07-14 08:55:41 - Comparing: ID='6874c4012f3a9' (target: '6874c4012f3a9') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:55:41 - Message found and authorized. Marking as deleted.
+2025-07-14 08:55:41 - Deletion successful.
+2025-07-14 08:58:16 - delete_message.php accessed.
+2025-07-14 08:58:16 - Current User: hamzah (Role: ceo)
+2025-07-14 08:58:16 - Message ID to Delete: 6874c40810764
+2025-07-14 08:58:16 - Comparing: ID='6874c4012f3a9' (target: '6874c40810764') | User='hamzah' (target: 'hamzah')
+2025-07-14 08:58:16 - Comparing: ID='6874c40810764' (target: '6874c40810764') | User='hamzah2' (target: 'hamzah')
+2025-07-14 08:58:16 - Message found and authorized. Marking as deleted.
+2025-07-14 08:58:16 - Deletion successful.
+2025-07-14 08:58:20 - delete_message.php accessed.
+2025-07-14 08:58:20 - Current User: hamzah2 (Role: admin)
+2025-07-14 08:58:20 - Message ID to Delete: 6874c69f841ea
+2025-07-14 08:58:20 - Comparing: ID='6874c4012f3a9' (target: '6874c69f841ea') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:58:20 - Comparing: ID='6874c40810764' (target: '6874c69f841ea') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 08:58:20 - Comparing: ID='6874c69f841ea' (target: '6874c69f841ea') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:58:20 - Message found and authorized. Marking as deleted.
+2025-07-14 08:58:20 - Deletion successful.
+2025-07-14 08:59:08 - delete_message.php accessed.
+2025-07-14 08:59:08 - Current User: hamzah (Role: ceo)
+2025-07-14 08:59:08 - Message ID to Delete: 6874c6cc7477c
+2025-07-14 08:59:08 - Comparing: ID='6874c6cc7477c' (target: '6874c6cc7477c') | User='hamzah' (target: 'hamzah')
+2025-07-14 08:59:08 - Message found and authorized. Marking as deleted.
+2025-07-14 08:59:08 - Deletion successful.
+2025-07-14 08:59:13 - delete_message.php accessed.
+2025-07-14 08:59:13 - Current User: hamzah2 (Role: admin)
+2025-07-14 08:59:13 - Message ID to Delete: 6874c6d20c195
+2025-07-14 08:59:13 - Comparing: ID='6874c6cc7477c' (target: '6874c6d20c195') | User='hamzah' (target: 'hamzah2')
+2025-07-14 08:59:13 - Comparing: ID='6874c6d20c195' (target: '6874c6d20c195') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 08:59:13 - Message found and authorized. Marking as deleted.
+2025-07-14 08:59:13 - Deletion successful.
+2025-07-14 09:00:49 - delete_message.php accessed.
+2025-07-14 09:00:49 - Current User: hamzah (Role: ceo)
+2025-07-14 09:00:49 - Message ID to Delete: 6874c738c45f1
+2025-07-14 09:00:49 - Comparing: ID='6874c738c45f1' (target: '6874c738c45f1') | User='hamzah' (target: 'hamzah')
+2025-07-14 09:00:49 - Message found and authorized. Marking as deleted.
+2025-07-14 09:00:49 - Deletion successful.
+2025-07-14 09:00:52 - delete_message.php accessed.
+2025-07-14 09:00:52 - Current User: hamzah (Role: ceo)
+2025-07-14 09:00:52 - Message ID to Delete: 6874c73a5e714
+2025-07-14 09:00:52 - Comparing: ID='6874c738c45f1' (target: '6874c73a5e714') | User='hamzah' (target: 'hamzah')
+2025-07-14 09:00:52 - Comparing: ID='6874c73a5e714' (target: '6874c73a5e714') | User='hamzah2' (target: 'hamzah')
+2025-07-14 09:00:52 - Message found and authorized. Marking as deleted.
+2025-07-14 09:00:52 - Deletion successful.
+2025-07-14 09:00:57 - delete_message.php accessed.
+2025-07-14 09:00:57 - Current User: hamzah2 (Role: admin)
+2025-07-14 09:00:57 - Message ID to Delete: 6874c73be14f4
+2025-07-14 09:00:57 - Comparing: ID='6874c738c45f1' (target: '6874c73be14f4') | User='hamzah' (target: 'hamzah2')
+2025-07-14 09:00:57 - Comparing: ID='6874c73a5e714' (target: '6874c73be14f4') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 09:00:57 - Comparing: ID='6874c73be14f4' (target: '6874c73be14f4') | User='hamzah' (target: 'hamzah2')
+2025-07-14 09:00:57 - Message found and authorized. Marking as deleted.
+2025-07-14 09:00:57 - Deletion successful.
+2025-07-14 09:01:01 - delete_message.php accessed.
+2025-07-14 09:01:01 - Current User: hamzah2 (Role: admin)
+2025-07-14 09:01:01 - Message ID to Delete: 6874c73dd7275
+2025-07-14 09:01:01 - Comparing: ID='6874c738c45f1' (target: '6874c73dd7275') | User='hamzah' (target: 'hamzah2')
+2025-07-14 09:01:01 - Comparing: ID='6874c73a5e714' (target: '6874c73dd7275') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 09:01:01 - Comparing: ID='6874c73be14f4' (target: '6874c73dd7275') | User='hamzah' (target: 'hamzah2')
+2025-07-14 09:01:01 - Comparing: ID='6874c73dd7275' (target: '6874c73dd7275') | User='hamzah2' (target: 'hamzah2')
+2025-07-14 09:01:01 - Message found and authorized. Marking as deleted.
+2025-07-14 09:01:01 - Deletion successful.

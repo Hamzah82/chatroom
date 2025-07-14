@@ -13,22 +13,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $users = json_decode(file_get_contents('users.json'), true);
 
-    $login_success = false;
+    $found_user = null;
     foreach ($users as &$user) {
-        if ($user['username'] === $username && password_verify($password, $user['password'])) {
-            $_SESSION["loggedin"] = true;
-            $_SESSION["username"] = $username;
-            $_SESSION["role"] = $user['role'] ?? 'user'; // Store role in session, default to 'user'
-            $user['last_active'] = time();
-            $login_success = true;
+        if ($user['username'] === $username) {
+            $found_user = &$user;
             break;
         }
     }
 
-    if($login_success){
-        file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
-        header("location: index.php");
-        exit;
+    if ($found_user) {
+        if (($found_user['banned'] ?? false)) {
+            $error = "Your account has been banned.";
+        } elseif (password_verify($password, $found_user['password'])) {
+            $_SESSION["loggedin"] = true;
+            $_SESSION["username"] = $username;
+            $_SESSION["role"] = $found_user['role'] ?? 'user';
+            $_SESSION['last_login_time'] = time();
+            $found_user['last_active'] = time();
+            $found_user['last_login_time'] = time();
+
+            file_put_contents('users.json', json_encode($users, JSON_PRETTY_PRINT));
+            header("location: index.php");
+            exit;
+        } else {
+            $error = "Invalid username or password.";
+        }
     } else {
         $error = "Invalid username or password.";
     }
